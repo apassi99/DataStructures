@@ -44,6 +44,7 @@ public class AVLTreeTest {
 	 */
 	@Test
 	public void testInsert(){
+		assertFalse(mTestTree.insert(null));
 		assertEquals(mTestTree.size(), 0);
 		assertTrue(mTestTree.insert(100));
 		assertEquals(mTestTree.size(), 1);
@@ -83,6 +84,8 @@ public class AVLTreeTest {
 			assertTrue(mTestTree.insert(i));
 			assertEquals(mTestTree.find(i), (Integer) i);
 		}
+		
+		assertEquals(mTestTree.find(null), null);
 	}
 	
 	/**
@@ -93,6 +96,7 @@ public class AVLTreeTest {
 		assertFalse(mTestTree.remove(100));
 		assertFalse(mTestTree.remove(200));
 		assertFalse(mTestTree.remove(150));
+		assertFalse(mTestTree.remove(null));
 		
 		assertTrue(mTestTree.insert(150));
 		assertTrue(mTestTree.insert(100));
