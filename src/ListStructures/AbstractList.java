@@ -127,6 +127,30 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
     
     // ----------------------------------------------------------
     /**
+     * Method to retrieve the first element in the list.
+     * 
+     * Throws an IllegalStateException if the list
+     * is empty.
+     * 
+     * @return last data element in the list.
+     * @throws IllegalStateException
+     */
+    public abstract T getFirst() throws IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to retrieve the last element in the list.
+     * 
+     * Throws an IllegalStateException if the list
+     * is empty.
+     * 
+     * @return last data element in the list.
+     * @throws IllegalStateException
+     */
+    public abstract T getLast() throws IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
      * This method sorts the list in ascending order. 
      */
     public abstract void sort();

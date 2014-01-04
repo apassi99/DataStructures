@@ -122,12 +122,40 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
 	 * Throws an IndexOutOfBounds exception if the 
 	 * provided index is out of range.
 	 * 
+	 * Throws an IllegalStateException if the list
+	 * is empty.
+	 * 
 	 * @param index : location from where the data element
 	 * 				  retrieved.
 	 * @return the data element provided the index.
 	 * @throws IndexOutOfBoundsException
+	 * @throws IllegalStateException
 	 */
-    public T get(int index) throws IndexOutOfBoundsException;
+    public T get(int index) throws IndexOutOfBoundsException, IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to retrieve the first element in the list.
+     * 
+     * Throws an IllegalStateException if the list
+     * is empty.
+     * 
+     * @return last data element in the list.
+     * @throws IllegalStateException
+     */
+    public T getFirst() throws IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to retrieve the last element in the list.
+     * 
+     * Throws an IllegalStateException if the list
+     * is empty.
+     * 
+     * @return last data element in the list.
+     * @throws IllegalStateException
+     */
+    public T getLast() throws IllegalStateException;
     
     // ----------------------------------------------------------
     /**
