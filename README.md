@@ -1,4 +1,4 @@
-SearchTrees
+DataStructures
 ===========
 
-Implementation of search trees.
+Implementation of AVL Trees. Other data structures commming soon!
