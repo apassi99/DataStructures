@@ -18,6 +18,13 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
     
     // ----------------------------------------------------------
     /**
+     * Method returns whether the list is empty
+     * @return true of the list is empty otherwise false.
+     */
+    public boolean isEmpty();
+    
+    // ----------------------------------------------------------
+    /**
 	 * Method to insert a desired data element given
 	 * an index.
 	 * 
@@ -75,8 +82,11 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
     
     // ----------------------------------------------------------
     /**
-     * Method to delete the provided data element from
-     * the list.
+     * Method to delete the first occurrence of the provided data
+     * element from the list.
+     * 
+     * Throws an IllegalArgumentException if a null data element
+     * is being tried to be deleted from the list.
      * 
      * Throws an IllegalStateException if the list is
      * empty and deletion is called.
@@ -86,10 +96,33 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
      * 
      * @param data : data element to be deleted.
      * @return : data element that got deleted.
+     * @throws IllegalArgumentException
      * @throws IllegalStateException
      * @throws NoSuchElementException
      */
-    public T delete(T data) throws IllegalStateException, NoSuchElementException;
+    public T delete(T data) throws IllegalArgumentException, IllegalStateException, NoSuchElementException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to delete all the occurrences of the provided data
+     * element from the list.
+     * 
+     * Throws an IllegalArgumentException if a null data element
+     * is being deleted from the list.
+     * 
+     * Throws an IllegalStateException if the list is empty and
+     * deletion is called.
+     * 
+     * Throws a NoSuchElementException of the data element desired
+     * to be deleted is not in the list.
+     *  
+     * @param data : data element to be removed from the list.
+     * @return : data element that was removed from the list.
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws NoSuchElementException
+     */
+    public T deleteAll(T data) throws IllegalArgumentException, IllegalStateException, NoSuchElementException;
     
     // ----------------------------------------------------------
     /**
@@ -113,6 +146,17 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
      * @throws IllegalStateException
      */
     public T deleteLast() throws IllegalStateException;
+    
+    // ---------------------------------------------------------- 
+    /**
+     * Method to delete all the duplicate elements in the list.
+     * 
+     * Throws an IllegalStateException if the list is empty.
+     * 
+     * @return : List of elements that were duplicated and got removed.
+     * @throws IllegalStateException
+     */
+    public List<T> deleteDuplicates() throws IllegalStateException;
     
     // ----------------------------------------------------------
     /**
@@ -140,7 +184,7 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
      * Throws an IllegalStateException if the list
      * is empty.
      * 
-     * @return last data element in the list.
+     * @return first data element in the list.
      * @throws IllegalStateException
      */
     public T getFirst() throws IllegalStateException;

@@ -14,6 +14,13 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
     
     // ----------------------------------------------------------
     /**
+     * Method returns whether the list is empty
+     * @return true of the list is empty otherwise false.
+     */
+    public abstract boolean isEmpty();
+    
+    // ----------------------------------------------------------
+    /**
 	 * Method to insert a desired data element given
 	 * an index.
 	 * 
@@ -65,14 +72,18 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
 	 * 
 	 * @param index : location of the data element to be removed.
 	 * @return data element that was removed from the list.
+	 * @throws IllegalStateException
 	 * @throws IndexOutOfBoundsException
 	 */
-    public abstract T delete(int index) throws IndexOutOfBoundsException;
+    public abstract T delete(int index) throws IllegalStateException, IndexOutOfBoundsException;
     
     // ----------------------------------------------------------
     /**
-     * Method to delete the provided data element from
-     * the list.
+     * Method to delete the first occurrence of the provided data
+     * element from the list.
+     * 
+     * Throws an IllegalArgumentException if a null data element
+     * is being tried to be deleted from the list.
      * 
      * Throws an IllegalStateException if the list is
      * empty and deletion is called.
@@ -82,10 +93,33 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
      * 
      * @param data : data element to be deleted.
      * @return : data element that got deleted.
+     * @throws IllegalArgumentException
      * @throws IllegalStateException
      * @throws NoSuchElementException
      */
-    public abstract T delete(T data) throws IllegalStateException, NoSuchElementException;
+    public abstract T delete(T data) throws IllegalArgumentException, IllegalStateException, NoSuchElementException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to delete all the occurrences of the provided data
+     * element from the list.
+     * 
+     * Throws an IllegalArgumentException if a null data element
+     * is being deleted from the list.
+     * 
+     * Throws an IllegalStateException if the list is empty and
+     * deletion is called.
+     * 
+     * Throws a NoSuchElementException of the data element desired
+     * to be deleted is not in the list.
+     *  
+     * @param data : data element to be removed from the list.
+     * @return : data element that was removed from the list.
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws NoSuchElementException
+     */
+    public abstract T deleteAll(T data) throws IllegalArgumentException, IllegalStateException, NoSuchElementException;
     
     // ----------------------------------------------------------
     /**
@@ -110,6 +144,17 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
      */
     public abstract T deleteLast() throws IllegalStateException;
     
+    // ---------------------------------------------------------- 
+    /**
+     * Method to delete all the duplicate elements in the list.
+     * 
+     * Throws an IllegalStateException if the list is empty.
+     * 
+     * @return : List of elements that were duplicated and got removed.
+     * @throws IllegalStateException
+     */
+    public abstract List<T> deleteDuplicates() throws IllegalStateException;
+    
     // ----------------------------------------------------------
     /**
 	 * Method to retrieve the element at the desired
@@ -132,7 +177,7 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
      * Throws an IllegalStateException if the list
      * is empty.
      * 
-     * @return last data element in the list.
+     * @return first data element in the list.
      * @throws IllegalStateException
      */
     public abstract T getFirst() throws IllegalStateException;
