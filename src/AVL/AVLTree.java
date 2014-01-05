@@ -13,7 +13,7 @@ import java.util.List;
 public class AVLTree <T extends Comparable<? super T>>{
 	
 	/**
-	 * This class represents a AVLTreeNode that stores
+	 * This class represents an AVLTreeNode that stores
 	 * the data element, both its children, and the height.
 	 * @author Arjun Passi
 	 *
@@ -90,6 +90,61 @@ public class AVLTree <T extends Comparable<? super T>>{
 			return find(n.mRight, data);
 		else
 			return find(n.mLeft, data);
+	}
+	
+	/**
+	 * Method to retrieve the max data element in
+	 * the AVL tree.
+	 * 
+	 * @return : reference to the maximum element
+	 * in the AVL Tree
+	 */
+	public T max(){
+		
+		return max(mRoot);
+	}
+	
+	/**
+	 * Helper method to recursively find the maximum 
+	 * element in the AVL tree.
+	 * 
+	 * @param n : AVLTreeNode
+	 * @return : reference to the max data element.
+	 */
+	private T max(AVLTreeNode n){
+		if(n == null)
+			return null;
+		if(n.mRight == null)
+			return n.mData;
+		
+		return max(n.mRight);
+	}
+	
+	/**
+	 * Method to retrieve the minimum data element
+	 * in the AVL tree.
+	 * 
+	 * @return : reference to the minimum element.
+	 */
+	public T min(){
+		
+		return min(mRoot);
+	}
+	
+	/**
+	 * Helper method to recursively find the minimum
+	 * data element in the AVL tree.
+	 * 
+	 * @param n : AVLTreeNode
+	 * @return : reference to the minimum element.
+	 */
+	private T min(AVLTreeNode n){
+		if(n == null)
+			return null;
+		if(n.mLeft == null)
+			return n.mData;
+		
+		return min(n.mLeft);
 	}
 
 	/**

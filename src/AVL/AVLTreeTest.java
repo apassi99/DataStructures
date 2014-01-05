@@ -66,7 +66,6 @@ public class AVLTreeTest {
 		assertEquals(mTestTree.size(), 4);
 		assertEquals(mTestTree.find(125), (Integer) 125);
 		
-		
 		for(int i = 0; i < 50; i++){
 			assertTrue(mTestTree.insert(i));
 			assertEquals(mTestTree.size(), 5 + i);
@@ -125,6 +124,7 @@ public class AVLTreeTest {
 			assertTrue(mTestTree.remove(j));
 			assertEquals(mTestTree.find(j), null);
 		}
+		
 	}
 	
 	/**
@@ -170,6 +170,60 @@ public class AVLTreeTest {
 		
 		assertEquals(list, mTestTree.inOrderTraversal());
 		
+	}
+	
+	/**
+	 * Test method for max()
+	 */
+	@Test
+	public void testMax(){
+		assertEquals(mTestTree.max(), null);
+		
+		
+		for(int i = 0; i < 1000; i++){
+			mTestTree.insert(i);
+			assertEquals(mTestTree.max(), (Integer) i);
+		}
+
+		mTestTree.remove(999);
+		
+		assertEquals(mTestTree.max(), (Integer) 998);
+		mTestTree.remove(998);
+		
+		assertEquals(mTestTree.max(), (Integer) 997);
+		
+		mTestTree.remove(0);
+		mTestTree.remove(80);
+		mTestTree.remove(100);
+		mTestTree.remove(300);
+		
+		assertEquals(mTestTree.max(), (Integer) 997);
+		
+		mTestTree.removeAll();
+		
+		assertEquals(mTestTree.max(), null);
+	}
+	
+	/**
+	 * Test method for minimum.
+	 */
+	@Test
+	public void testMin(){
+		assertEquals(mTestTree.min(), null);
+		
+		for(int i = 1000; i >= 0; i--){
+			mTestTree.insert(i);
+			assertEquals(mTestTree.min(), (Integer) i);
+		}
+		
+		mTestTree.remove(0);
+		assertEquals(mTestTree.min(), (Integer) 1);
+		
+		mTestTree.remove(2);
+		assertEquals(mTestTree.min(), (Integer) 1);
+		
+		mTestTree.remove(1);
+		assertEquals(mTestTree.min(), (Integer) 3);
 	}
 
 }
