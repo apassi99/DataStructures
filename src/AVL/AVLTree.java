@@ -148,6 +148,32 @@ public class AVLTree <T extends Comparable<? super T>>{
 	}
 
 	/**
+	 * Method to find out whether the provided data
+	 * is in the tree.
+	 * 
+	 * @param data : data element to be found.
+	 * @return true if the element exists in the tree
+	 * otherwise false.
+	 */
+	public boolean contains(T data){
+		if(data == null)
+			return false;
+		
+		return contains(mRoot, data);
+	}
+	
+	private boolean contains(AVLTreeNode n, T data){
+		if(n == null)
+			return false;
+		if(data.compareTo(n.mData) == 0)
+			return true;
+		else if(data.compareTo(n.mData) > 0)
+			return contains(n.mRight, data);
+		else
+			return contains(n.mLeft, data);
+	}
+	
+	/**
 	 * This method allows to insert a data element
 	 * in the AVL tree.
 	 * @param data

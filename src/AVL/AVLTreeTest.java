@@ -22,7 +22,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for size()
+	 * Test method for {@link AVLTree#size()}
 	 */
 	@Test
 	public void testSize(){
@@ -40,7 +40,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for insert
+	 * Test method for {@link AVLTree#insert(Comparable)}
 	 */
 	@Test
 	public void testInsert(){
@@ -74,7 +74,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for find
+	 * Test method for {@link AVLTree#find(Comparable)}
 	 */
 	@Test
 	public void testFind(){
@@ -88,7 +88,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for remove
+	 * Test method for {@link AVLTree#remove(Comparable)}
 	 */
 	@Test
 	public void testRemove(){
@@ -128,7 +128,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for removeAll
+	 * Test method for {@link AVLTree#removeAll()}
 	 */
 	@Test
 	public void testRemoveAll(){
@@ -143,7 +143,7 @@ public class AVLTreeTest {
 			assertEquals(mTestTree.find(j), null);
 	}
 	/**
-	 * Test method for inOrderTraversal
+	 * Test method for {@link AVLTree#insert(Comparable)}
 	 */
 	@Test
 	public void testInOrderTraversal(){
@@ -173,7 +173,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for max()
+	 * Test method for {@link AVLTree#max()}
 	 */
 	@Test
 	public void testMax(){
@@ -205,7 +205,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for min().
+	 * Test method for {@link AVLTree#min()}.
 	 */
 	@Test
 	public void testMin(){
@@ -227,7 +227,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for equals().
+	 * Test method for {@link AVLTree#equals(Object)}
 	 */
 	@Test
 	public void testEquals(){
@@ -264,7 +264,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for isSubTree()
+	 * Test method for {@link AVLTree#isSubTree(AVLTree)}
 	 */
 	@Test
 	public void testIsSubTree(){
@@ -308,4 +308,41 @@ public class AVLTreeTest {
 		assertTrue(mTestTree.isSubTree(tree));
 	}
 
+	/**
+	 * Method to test {@link AVLTree#contains(Comparable)}
+	 */
+	public void testContains(){
+		
+		assertFalse(mTestTree.contains((Integer) 100));
+		assertFalse(mTestTree.contains(null));
+		assertFalse(mTestTree.contains((Integer) 200));
+		
+		mTestTree.insert(100);
+		mTestTree.insert(200);
+		mTestTree.insert(300);
+		mTestTree.insert(400);
+		mTestTree.insert(500);
+		
+		assertTrue(mTestTree.contains((Integer) 100));
+		assertFalse(mTestTree.contains(null));
+		assertTrue(mTestTree.contains((Integer) 200));
+		assertTrue(mTestTree.contains((Integer) 300));
+		assertTrue(mTestTree.contains((Integer) 400));
+		assertTrue(mTestTree.contains((Integer) 500));
+		
+		mTestTree.remove((Integer) 100);
+		assertFalse(mTestTree.contains((Integer) 100));
+		assertTrue(mTestTree.contains((Integer) 200));
+		assertTrue(mTestTree.contains((Integer) 300));
+		assertTrue(mTestTree.contains((Integer) 400));
+		assertTrue(mTestTree.contains((Integer) 500));
+		
+		mTestTree.removeAll();
+		
+		assertFalse(mTestTree.contains((Integer) 200));
+		assertFalse(mTestTree.contains((Integer) 300));
+		assertFalse(mTestTree.contains((Integer) 400));
+		assertFalse(mTestTree.contains((Integer) 500));
+		
+	}
 }
