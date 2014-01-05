@@ -205,7 +205,7 @@ public class AVLTreeTest {
 	}
 	
 	/**
-	 * Test method for minimum.
+	 * Test method for min().
 	 */
 	@Test
 	public void testMin(){
@@ -224,6 +224,88 @@ public class AVLTreeTest {
 		
 		mTestTree.remove(1);
 		assertEquals(mTestTree.min(), (Integer) 3);
+	}
+	
+	/**
+	 * Test method for equals().
+	 */
+	@Test
+	public void testEquals(){
+		AVLTree<Integer> tree = new AVLTree<Integer>();
+		
+		assertTrue(mTestTree.equals(tree));
+		
+		for(int i = 0; i <= 100; i++){
+			mTestTree.insert(i);
+			tree.insert(i);
+			assertTrue(mTestTree.equals(tree));
+		}
+		
+		for(int i = 100; i <= 50; i++){
+			mTestTree.remove(i);
+			tree.remove(i);
+			assertTrue(mTestTree.equals(tree));
+		}
+		
+		mTestTree.remove(49);
+		assertFalse(mTestTree.equals(tree));
+		
+		tree.remove(49);
+		assertTrue(mTestTree.equals(tree));
+		
+		assertFalse(mTestTree.equals(null));
+		assertFalse(mTestTree.equals(1));
+		
+		mTestTree.removeAll();
+		assertFalse(mTestTree.equals(tree));
+		
+		tree.removeAll();
+		assertTrue(mTestTree.equals(tree));
+	}
+	
+	/**
+	 * Test method for isSubTree()
+	 */
+	@Test
+	public void testIsSubTree(){
+		AVLTree<Integer> tree = new AVLTree<Integer>();
+		
+		assertTrue(mTestTree.isSubTree(tree));
+		assertFalse(mTestTree.isSubTree(null));
+		
+		mTestTree.insert(100);
+		mTestTree.insert(50);
+		mTestTree.insert(150);
+		mTestTree.insert(25);
+		mTestTree.insert(75);
+		mTestTree.insert(125);
+		mTestTree.insert(175);
+		
+		assertTrue(mTestTree.isSubTree(tree));
+		
+		tree.insert(100);
+		assertFalse(mTestTree.isSubTree(tree));
+		
+		tree.insert(50);
+		assertFalse(mTestTree.isSubTree(tree));
+		
+		tree.insert(150);
+		assertFalse(mTestTree.isSubTree(tree));
+		
+		tree.removeAll();
+		
+		tree.insert(150);
+		assertFalse(mTestTree.isSubTree(tree));
+		tree.insert(125);
+		assertFalse(mTestTree.isSubTree(tree));
+		
+		tree.insert(175);
+		assertTrue(mTestTree.isSubTree(tree));
+		
+		tree.removeAll();
+		
+		tree.insert(25);
+		assertTrue(mTestTree.isSubTree(tree));
 	}
 
 }

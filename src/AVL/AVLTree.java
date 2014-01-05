@@ -280,6 +280,33 @@ public class AVLTree <T extends Comparable<? super T>>{
 	}
 	
 	/**
+	 * Method to find out if the provided subtree is a
+	 * subtree of this tree.
+	 * 
+	 * @param tree : AVLTree passed.
+	 * @return true if the AVLTree passed is a subtree.
+	 */
+	public boolean isSubTree(AVLTree<T> tree){
+		if(tree == null)
+			return false;
+		if(tree.mSize == 0)
+			return true;
+		
+		AVLTreeNode n = mRoot;
+		
+		while(n != null){
+			if(n.mData.equals(tree.mRoot.mData))
+				break;
+			else if(tree.mRoot.mData.compareTo(n.mData) > 0)
+				n = n.mRight;
+			else
+				n = n.mLeft;
+		}
+		
+		return equals(n, (AVLTreeNode) tree.mRoot);
+	}
+	
+	/**
 	 * Method to retrieve the size of the tree.
 	 * @return size
 	 */
@@ -410,5 +437,49 @@ public class AVLTree <T extends Comparable<? super T>>{
 	 */
 	private int difference(AVLTreeNode n){
 		return (n == null) ? 0 : height(n.mLeft) - height(n.mRight);
+	}
+	
+	/**
+	 * Helper method to determine if the two trees are equals
+	 * or not.
+	 * @param n1
+	 * @param n2
+	 * @return
+	 */
+	private boolean equals(AVLTreeNode n1, AVLTreeNode n2){
+		if(n1 == null && n2 == null)
+			return true;
+		if(n1 == null ^ n2 == null)
+			return false;
+		
+		if(!n1.mData.equals(n2.mData))
+			return false;
+		
+		return equals(n1.mLeft, n2.mLeft) && equals(n1.mRight, n2.mRight);
+	}
+	
+	/**
+	 * Method to find out if the tree object passed
+	 * is similar to this tree object.
+	 * 
+	 * @param obj : AVL tree to compare with
+	 * @return true if the two AVL trees are equal.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object obj){
+		if(obj == null)
+			return false;
+		
+		if(obj instanceof AVLTree){
+			AVLTree<T> tree = (AVLTree<T>) obj;
+			
+			if(size() != tree.size())
+				return false;
+			
+			return equals(mRoot, tree.mRoot);
+		}
+		
+		return false;
 	}
 }
