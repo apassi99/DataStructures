@@ -162,6 +162,13 @@ public class AVLTree <T extends Comparable<? super T>>{
 		return contains(mRoot, data);
 	}
 	
+	/**
+	 * Helper method to recursively find the provided
+	 * data in the tree.
+	 * @param n : AVLTreeNode
+	 * @param data : data element to be found
+	 * @return true if the element exists otherwise false.
+	 */
 	private boolean contains(AVLTreeNode n, T data){
 		if(n == null)
 			return false;
