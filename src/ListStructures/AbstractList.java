@@ -196,6 +196,29 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
     
     // ----------------------------------------------------------
     /**
+     * Method to retrieve the max element present in the list.
+     * 
+     * Throws an IllegalStateException if the list is
+     * empty.
+     * 
+     * @return : reference to the maximum data element
+     * @throws IllegalStateException
+     */
+    public abstract T getMax() throws IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
+     * Method to retrieve the minimum element present in the list.
+     * 
+     * Throws and IllegalStateException if the list is empty.
+     * 
+     * @return : reference to the minimum data element.
+     * @throws IllegalStateException
+     */
+    public abstract T getMin() throws IllegalStateException;
+    
+    // ----------------------------------------------------------
+    /**
      * This method sorts the list in ascending order. 
      */
     public abstract void sort();
