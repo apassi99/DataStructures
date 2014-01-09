@@ -163,12 +163,16 @@ public abstract class AbstractList<T extends Comparable<? super T>> implements L
 	 * Throws an IndexOutOfBounds exception if the 
 	 * provided index is out of range.
 	 * 
+	 * Throws an IllegalStateException if the list
+	 * is empty.
+	 * 
 	 * @param index : location from where the data element
 	 * 				  retrieved.
 	 * @return the data element provided the index.
+	 * @throws IllegalStateException
 	 * @throws IndexOutOfBoundsException
 	 */
-    public abstract T get(int index) throws IndexOutOfBoundsException;
+    public abstract T get(int index) throws IllegalStateException, IndexOutOfBoundsException;
     
     // ----------------------------------------------------------
     /**

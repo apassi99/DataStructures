@@ -76,9 +76,10 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
 	 * 
 	 * @param index : location of the data element to be removed.
 	 * @return data element that was removed from the list.
+	 * @throws IllegalStateException
 	 * @throws IndexOutOfBoundsException
 	 */
-    public T delete(int index) throws IndexOutOfBoundsException;
+    public T delete(int index) throws IllegalStateException, IndexOutOfBoundsException;
     
     // ----------------------------------------------------------
     /**
@@ -172,10 +173,10 @@ public interface List<T extends Comparable<? super T>> extends Iterable<T> {
 	 * @param index : location from where the data element
 	 * 				  retrieved.
 	 * @return the data element provided the index.
-	 * @throws IndexOutOfBoundsException
 	 * @throws IllegalStateException
+	 * @throws IndexOutOfBoundsException
 	 */
-    public T get(int index) throws IndexOutOfBoundsException, IllegalStateException;
+    public T get(int index) throws IllegalStateException, IndexOutOfBoundsException;
     
     // ----------------------------------------------------------
     /**
