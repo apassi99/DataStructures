@@ -1,5 +1,7 @@
 package HashTable;
 
+import java.util.NoSuchElementException;
+
 /**
  * This class implements a Hash Table data structure.
  * It maps identifying keys to their associated values.
@@ -107,29 +109,186 @@ public class HashTable<K, V> {
     	if (value == null)
     		throw new IllegalArgumentException("Value is null");
     	
-    	put(new Entry(key, value));
+    	if (isReHashable())
+    		reHash();
+    	
+    	Entry e = new Entry(key, value);
+    	e.isActive = true;
+    	
+    	put(e);
+    	currentItems++;
     }
     
+    /**
+     * Helper method that inserts the Entry object
+     * in the hash table.
+     * 
+     * @param entry
+     */
     private void put(Entry entry) {
     	
+    	int index = index(entry.key);
+    	elements[index] = entry;
     }
     
+    /**
+     * Helper method to find the index location
+     * of the Entry associated with the provided key.
+     * 
+     * @param key
+     * @return index where the key maps to.
+     */
+    private int index(K key) {
+    	
+    	int offset = 1;
+    	int hash = key.hashCode() % size;
+    	
+    	while (elements[hash] != null && elements[hash].isActive) {
+    		hash = (key.hashCode() + ((offset * (offset + 1)) / 2)) % size;
+    		offset++;
+    	}
+    	
+    	return hash;
+    }
+    
+    /**
+     * Helper method to determine whether the hash table
+     * needs to be resized.
+     * 
+     * @return true if table needs to be resized otherwise false
+     */
+    private boolean isReHashable() {
+    	return currentItems >= loadFactor * size;
+    }
+    
+    /**
+     * Helper method that resizes/rehashes the table.
+     */
+    private void reHash(){
+    	
+    	Entry[] oldElements = elements;
+    	
+    	for (int i = 0; i < primeSizeValues.length - 1; i++) {
+    		if (size == primeSizeValues[i]) {
+    			size = primeSizeValues[i+1];
+    			break;
+    		}
+    	}
+    	
+    	elements = new HashTable.Entry[size];
+    	
+    	for (int i = 0; i < oldElements.length; i++) {
+    		if (oldElements[i] != null) {
+    			put(oldElements[i]);
+    		}
+    	}
+    }
+    
+    /**
+     * Method to remove a specific key/value pair from the table.
+     * 
+     * Throws an illegal argument exception if the key provided
+     * is null.
+     * 
+     * Throws a No such element exception if the key is not present
+     * in the table.
+     * 
+     * @param key
+     * @return
+     */
     public V remove(K key) {
-    	return null;
+    	
+    	if (key == null)
+    		throw new IllegalArgumentException("Key is null");
+    	
+    	int index = index(key);
+    	
+    	if (elements[index] == null || !elements[index].isActive)
+    		throw new NoSuchElementException("Key doesn't map to any value.");
+    	
+    	currentItems--;
+    	elements[index].isActive = false;
+    	return elements[index].value;
     }
     
+    /**
+     * Method to find what value does the provided key map to.
+     * 
+     * Throws an illegal argument exception if the key provided
+     * is null.
+     * 
+     * Throws a No such element exception if the key is not present
+     * in the table.
+     *  
+     * @param key
+     * @return
+     */
     public V get(K key) {
-    	return null;
+    	
+    	if (key == null)
+    		throw new IllegalArgumentException("Key is null");
+    	
+    	int index = index(key);
+    	
+    	if (elements[index] == null || !elements[index].isActive)
+    		throw new NoSuchElementException("Key doesn't map to any value.");
+    	
+    	return elements[index].value;
     }
     
+    /**
+     * Method returns true if the provided value is in the table
+     * otherwise it returns false.
+     * 
+     * @param value : value to search for in the hash table
+     * @return : true if the value is in the table otherwise false.
+     */
     public boolean containsValue(V value) {
+    	
+    	if (value == null)
+    		return false;
+    	
+    	for (int i = 0; i < elements.length; i++) {
+    		if (elements[i] != null && elements[i].isActive) {
+    			if (elements[i].value.equals(value))
+    				return true;
+    		}
+    	}
+    	
     	return false;
     }
     
+    /**
+     * Method returns true if the provided key is in the table
+     * otherwise it returns false.
+     * 
+     * @param key : key to search for in the hash table
+     * @return : true if the key is in the table otherwise false
+     */
     public boolean containsKey(K key) {
-    	return false;
+    	
+    	if (key == null)
+    		return false;
+    	
+    	return get(key) != null;
     }
     
-    
+    /**
+     * Method that returns a string representation of the hash table.
+     */
+    public String toString() {
+    	
+    	StringBuilder build = new StringBuilder();
+    	
+    	for (int i = 0; i < size; i++) {
+    		if(elements[i] != null) {
+    			if(elements[i].isActive)
+    				build.append(i + ":  " + elements[i].toString() + "\n");
+    				
+    		}
+    	}
+    	
+    	return build.toString();
+    }
 
 }
