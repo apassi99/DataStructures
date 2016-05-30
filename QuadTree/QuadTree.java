@@ -4,9 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A implementation of QuadTree that partitions a two dimensional
- * domain by dividing it into four quadrants. The keys associated
- * with the quad tree are stored in X-Y coordinate pairs.
+ * This is an implementation of QuadTree that partitions a
+ * two dimensional domain by dividing it into four quadrants.
+ * The keys associated with the quad tree are stored in X-Y
+ * coordinate pairs.
  * 
  * This is not a thread safe implementation.
  * 
@@ -74,6 +75,14 @@ public class QuadTree <T>{
 			m_yMax = yMax;
 		}
 		
+		/**
+		 * Method that returns the quadrant in which
+		 * the provided coordinate lies in the domain.
+		 * 
+		 * @param xcord - x-coordinate
+		 * @param ycord - y-coordinate
+		 * @return quadrant direction where the point lies.
+		 */
 		public Direction inQuadrant(long xcord, long ycord) {
 			assert contains(xcord, ycord);
 			
@@ -100,6 +109,13 @@ public class QuadTree <T>{
 				return Direction.NOQUADRANT;
 		}
 
+		/**
+		 * Method returns true if domain intersects with the
+		 * provided RectangularDomain
+		 *
+		 * @param rectDomain - rectangular domain
+		 * @return true if intersection exists otherwise false.
+		 */
 		@Override
 		public boolean intersects(RectangularDomain rectDomain) {
 			assert rectDomain != null;
@@ -108,12 +124,40 @@ public class QuadTree <T>{
 			          && m_yMin < rectDomain.m_yMax && m_yMax > rectDomain.m_yMin;
 		}
 
+		/**
+		 * Returns true if the provided x-y coordinate is
+		 * present in the domain.
+		 * 
+		 * @param x
+		 * @param y
+		 * @return
+		 */
 		@Override
 		public boolean contains(long x, long y) {
 			return (x <= m_xMax && x>= m_xMin && y<= m_yMax && y >= m_yMin);
 		}
+		
+		/**
+		 * Returns string representation of the domain.
+		 */
+		@Override
+		public String toString() {
+			StringBuilder build = new StringBuilder();
+			build.append("xmin:  " + m_xMin + "  xmax:  " +
+						 m_xMax + "  ymin:  " + m_yMin + 
+						 "  ymax:  " + m_yMax);
+			return build.toString();
+		}
 	}
 	
+	/**
+	 * This class represents a Data Entry in the
+	 * Quadtree. It is mainly a wrapper for the data
+	 * element and coordinates.
+	 * 
+	 * @author Arjun Passi
+	 *
+	 */
 	private class QuadTreeEntry {
 		
 		/** Reference to the x-coordinate. */
@@ -143,12 +187,25 @@ public class QuadTree <T>{
 			m_placed = false;
 		}
 		
+		/**
+		 * Returns true if the entries share
+		 * the same location.
+		 * 
+		 * @param entry - quad tree entry.
+		 * @return true if coordinates match otherwise false
+		 */
 		public boolean sameCoordinate(QuadTreeEntry entry) {
 			assert entry != null;
 			
 			return (m_x == entry.m_x && m_y == entry.m_y);
 		}
 		
+		/**
+		 * Method returns string representation of QuadTreeEntry
+		 * object.
+		 *
+		 * @return string representation of the object.
+		 */
 		@Override
 		public String toString() {
 			StringBuilder build = new StringBuilder();
@@ -157,9 +214,17 @@ public class QuadTree <T>{
 		}
 	}
 	
-	// You must use a hierarchy of node types with an abstract base
-	// class.  You may use different names for the node types if
-	// you like (change displayHelper() accordingly).
+	/**
+	 * This will serve as a base node class. There are
+	 * two types of node: leaf node and internal node.
+	 * Leaf node stores the data element and internal nodes
+	 * store the references to the four child nodes. This
+	 * class serves as a base class that can be used to refer
+	 * two different types of nodes.
+	 * 
+	 * @author Arjun Passi
+	 *
+	 */
 	private abstract class QuadNode { }
 	
 	/**
@@ -493,13 +558,22 @@ public class QuadTree <T>{
 					break;
 			}
 			
-			n = checkAndUpdate((QuadInternalNode) n);
+			n = checkAndUpdateNodeTransformation((QuadInternalNode) n);
 		}
 		
 		return n;
 	}
 	
-	private QuadNode checkAndUpdate(QuadInternalNode n) {
+	/**
+	 * This method take cares of a special case in remove method
+	 * where an internal node stores reference to one leaf node.
+	 * In such a situation the internal node must be replaced with
+	 * the leaf node itself.
+	 * 
+	 * @param n - quadnode that needs to be updated if required
+	 * @return updated quadnode 
+	 */
+	private QuadNode checkAndUpdateNodeTransformation(QuadInternalNode n) {
 		if (n == null) {
 			return null;
 		}
